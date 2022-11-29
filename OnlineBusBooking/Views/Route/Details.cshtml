@@ -1,0 +1,70 @@
+﻿@model IEnumerable<OnlineBusBooking.Models.Route>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddRoute")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RouteName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fare)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AvailableSeats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BusMaster.BusNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Destination.PlaceOfDestination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Origintbl.Origin)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RouteName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Schedule)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fare)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailableSeats)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BusMaster.BusNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destination.PlaceOfDestination)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Origintbl.Origin)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.RouteId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.RouteId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.RouteId })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,94 @@
+﻿@model OnlineBusBooking.Models.Route
+
+@{
+    ViewBag.Title = "AddRoute";
+
+    if (TempData["addRouteAlert"] != null)
+    {
+        <div class="alert alert-dismissible alert-success container">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Well done!</strong> You successfully @TempData["addRouteAlert"].
+        </div>
+    }
+    if (TempData["errAlert"] != null)
+    {
+        <div class="alert alert-dismissible alert-danger container">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Opsss!</strong> @TempData["errAlert"]. Please change the schedule or the Bus number.
+        </div>
+    }
+}
+
+
+
+@using (Html.BeginForm("AddRoute", "Route", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <h2 class="container">AddRoute</h2>
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.OriginId, "OriginId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("OriginID", new SelectList(Model.originCollection, "OriginID", "Origin"), "--Select Origin--", htmlAttributes: new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.OriginId, "", new { @class = "text-danger" })
+                <p>
+                    @Html.ActionLink("Add Origin", "AddOrigin")
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DesinationId, "DesinationId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("DesinationId", new SelectList(Model.destinationCollection, "DestinationID", "PlaceOfDestination"), htmlAttributes: new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.DesinationId, "", new { @class = "text-danger" })
+                <p>
+                    @Html.ActionLink("Add Destination", "AddDestination")
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Schedule, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Schedule, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.Schedule, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Fare, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Fare, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Fare, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AvailableSeats, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AvailableSeats, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AvailableSeats, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BusId, "BusId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("BusId", new SelectList(Model.busCollection, "BusId", "BusNo"), "--Select Bus Number--", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BusId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

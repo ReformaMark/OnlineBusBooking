@@ -1,0 +1,91 @@
+﻿@model IEnumerable<OnlineBusBooking.Models.User>
+
+@{
+    ViewBag.Title = "Employee";
+}
+<div class="container">
+    <h2 align="center">Employees</h2>
+    @{
+        if (Session["employeeRole"] != null)
+        {
+            if (Session["employeeRole"].ToString() == "Admin")
+            {
+            <button class="btn btn-primary btn-sm glyphicon glyphicon-plus" data-toggle="modal" data-target="#addEmployee"> Employee</button>
+            }
+        }
+        if (TempData["alertMessage"] != null)
+        {
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Well done!</strong> You successfully @TempData["alertMessage"].
+            </div>
+        }
+    }
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th> Actions</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@Url.Content(item.Image ?? "defaultImg.jpg")" class="img-rounded" width="100" height="100" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+
+                <td>
+                    @{
+                        if (Session["employeeRole"] != null)
+                        {
+                            if (Session["employeeRole"].ToString() == "Admin")
+                            {
+                                <button class="btn btn-warning btn-sm glyphicon glyphicon-pencil" data-toggle="modal" data-target="@("#employeeEdit-" + item.EmployeeId)" data-url="@Url.Action($"Edit/{item.EmployeeId}")"></button>
+                                @Html.Partial("_EmployeeEditPartialView", item);
+                                <button class="btn btn-info btn-sm glyphicon glyphicon-info-sign" data-toggle="modal" data-target="@("#employeeDetails-" + item.EmployeeId)" data-url="@Url.Action($"Details/{item.EmployeeId}")"></button>
+                                @Html.Partial("_EmployeeDetailsPartialView", item);
+                                <button class="btn btn-danger btn-sm glyphicon glyphicon-trash" data-toggle="modal" data-target="@("#employeeDelete-" + item.EmployeeId)" data-url="@Url.Action($"Delete/{item.EmployeeId}")"></button>
+                                @Html.Partial("_EmployeeDeletePartialView", item);
+                            }
+                        }
+
+                    }
+
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>
+
+
+@Html.Partial("_EmployeePartialView", new @OnlineBusBooking.Models.User());

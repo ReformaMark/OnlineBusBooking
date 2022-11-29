@@ -1,0 +1,109 @@
+﻿@model OnlineBusBooking.Models.OriginDestinationViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+@using (Html.BeginForm("SearchRoute", "Home", FormMethod.Get))
+{
+    <div class="jumbotron" style="padding: 3% 8%; height:100vh" align="justify">
+        <h2>Online Bus Booking</h2>
+        <p>Nullam quis risus eget <a href="#">urna mollis ornare</a> vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+
+
+        <p><small>Choose Origin, Destination, Date, and number of passenger below.</small></p>
+        <div class="row" style="margin-top:3em">
+
+            <div class="col-lg-4 col-sm-1 dropdown">
+                <label>From</label>
+                @if (ViewBag.OriginList != null)
+                {
+                    @Html.DropDownListFor(m => m.OriginID, ViewBag.OriginList as SelectList, "--Select Oringin--", new { @class = "form-control" })
+                }
+            </div>
+            <div class="col-lg-4 col-sm-1">
+                <label>To</label>
+                @Html.DropDownListFor(model => model.DestinationID, new SelectList(" "), "--Select Destination--", new { @class = "form-control" })
+            </div>
+
+            <div class="col-lg-4 col-sm-1">
+                <label>Departure Date</label>
+                <input class="form-control" data-val="true" data-val-date="The field Date must be a date." data-val-required="The Date field is required." id="Date" name="Date" type="date" value="">
+            </div>
+            @*<div class="col-lg-3 col-sm-1">
+                    <label class="control-label">Date of Departure</label>
+
+                    @Html.EditorFor(model => model.Date, new { @class = "form-control" })
+
+
+                </div>*@
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" align="center" style="margin:3em 0">
+                <div class="form-group">
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="container" style="background-color:antiquewhite;">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Bus Company 1</h2>
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Bus Company 2</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="container success">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Bus Company 3</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    //Cascading dropdown
+    $(document).ready(function () {
+        $("#OriginID").change(function () {
+            $.get("/Home/GetDestinationList", { OriginID: $(OriginID).val() }, function (data) {
+                $("#DestinationID").empty();
+                $.each(data, function (index, row) {
+                    $("#DestinationID").append("<option value='" + row.DestinationID + "'>" + row.PlaceOfDestination + "</option")
+                });
+            });
+
+        })
+    });
+
+
+</script>

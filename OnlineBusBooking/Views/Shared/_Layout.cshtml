@@ -1,0 +1,109 @@
+﻿@{ 
+    bool isLoggedIn = true;
+    if(Session["employeeRole"] == null)
+    {
+        isLoggedIn = false;
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/bootswatch-theme-flatly.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("OnlineBusBooking", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                    @{if (Session["employeeRole"] != null)
+                        {
+                            if (Session["employeeRole"].ToString() == "Staff" || Session["employeeRole"].ToString() == "Admin")
+                            {
+                                <li>@Html.ActionLink("Route Details", "Details", "Route")</li>
+                                <li>@Html.ActionLink("Booking Report", "Report", "Booking")</li>
+                                <li>@Html.ActionLink("Bus Details", "BusDetails", "Bus")</li>
+                                <li>@Html.ActionLink("Manage", "Employee", "Admin")</li>
+                            }
+                            else
+                            {
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("About", "About", "Home")</li>
+                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            }
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        }
+
+
+
+
+                    }
+                </ul>
+
+
+                @{
+                    if (isLoggedIn)
+                    {
+                        if (Session["employeeRole"] != null)
+                        {
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>@Html.ActionLink(Session["userUsername"].ToString(), "Index", "Home")</li>
+                                <li><a href="@Url.Action("LogOut", "User")">Log Out</a></li>
+                            </ul>
+                        }
+                    }
+                    else
+                    {
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>@Html.ActionLink("Register", "Register", "User")</li>
+                            <li>@Html.ActionLink("Login", "Login", "User")</li>
+                        </ul>
+
+                    }
+
+
+
+
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="">
+     
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/Site.js"></script>
+</body>
+</html>
