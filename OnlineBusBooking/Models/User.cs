@@ -18,14 +18,30 @@ namespace OnlineBusBooking.Models
     public partial class User
     {
         public int EmployeeId { get; set; }
+        [StringLength(60, MinimumLength = 8)]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
+        [Required(ErrorMessage = "Name is required!")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Username is required!")]
+        [StringLength(60, MinimumLength = 8)]
         public string Username { get; set; }
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+        [Required(ErrorMessage = "Password is required!")]
+        [StringLength(60, MinimumLength = 8)]
+        [RegularExpression(@"((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})" , ErrorMessage = "Please type atleast 8 alphanumeric characters!")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
         [NotMapped]
+        
+        [Display(Name = "Confirm Password")]
+        [Compare("Password", ErrorMessage = "Password mismatch")]
+        [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
         [Display(Name = "Image")]
         public string Image { get; set; }
+        [Required(ErrorMessage = "Role is required!")]
+       
         public string Role { get; set; }
 
         [NotMapped]

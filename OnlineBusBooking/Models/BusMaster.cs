@@ -11,7 +11,8 @@ namespace OnlineBusBooking.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class BusMaster
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,9 +20,12 @@ namespace OnlineBusBooking.Models
         {
             this.Routes = new HashSet<Route>();
         }
-    
+        
         public int BusId { get; set; }
+        [Required(ErrorMessage ="Bus number is required!")]
+
         public string BusNo { get; set; }
+        [Required(ErrorMessage = "Bus type is required!")]
         public string BustType { get; set; }
         public Nullable<int> TotalSeat { get; set; }
         public Nullable<int> SeatColumn { get; set; }
@@ -29,7 +33,9 @@ namespace OnlineBusBooking.Models
         public Nullable<int> BookedSeat { get; set; }
         public Nullable<int> AvailableSeats { get; set; }
         public string BusName { get; set; }
-    
+        [Display(Name = "Image")]
+        public string Image { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Route> Routes { get; set; }
     }

@@ -1,0 +1,83 @@
+﻿@model OnlineBusBooking.Models.Route
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+@using (Html.BeginForm("Delete", "Route", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Route</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.RouteId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.OriginId, "OriginId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.OriginId)
+        </div>     
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DesinationId, "DesinationId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.DesinationId)
+        </div>
+        
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RouteName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.RouteName)
+        </div>
+        
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Date)
+        </div>
+       
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Fare, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Fare)
+        </div>
+       
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AvailableSeats, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.AvailableSeats)
+        </div>
+       
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BusId, "BusId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.BusId)
+        </div>
+       
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Delete" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+

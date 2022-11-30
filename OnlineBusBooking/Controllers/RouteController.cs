@@ -10,11 +10,11 @@ using System.Web.Mvc;
 namespace BusBookingSystem.Controllers
 {
     
-    public class RouteController : Controller
+    public class RouteController : Controller  
     {
         OnlineBusBookingEntities context = new OnlineBusBookingEntities();
         // GET: Route
-        public ActionResult Details()
+        public ActionResult Details(String searching)
         {
             if (Session["employeeRole"] != null)
             {
@@ -23,7 +23,7 @@ namespace BusBookingSystem.Controllers
                     return HttpNotFound();
                 }
                 var routes = context.Routes.ToList();
-                return View(routes);
+                return View(context.Routes.Where(x => x.RouteName.Contains(searching) || searching == null).ToList());
             }
 
             return HttpNotFound();
@@ -141,6 +141,9 @@ namespace BusBookingSystem.Controllers
                     return HttpNotFound();
                 }
                 Route route = context.Routes.Single(x => x.RouteId == id);
+                route.destinationCollection = context.Destinations.ToList();
+                route.originCollection = context.Origintbls.ToList();
+                route.busCollection = context.BusMasters.ToList();
                 return View(route);
             }
             return HttpNotFound();
@@ -152,6 +155,34 @@ namespace BusBookingSystem.Controllers
             context.Entry(route).State = EntityState.Modified;
             context.SaveChanges();
             return RedirectToAction("Details", "Route");
+        }
+
+        public ActionResult Delete(int id)
+        {
+            if (Session["employeeRole"] != null)
+            {
+                if (Session["employeeRole"].ToString() == "User")
+                {
+                    return HttpNotFound();
+                }
+                Route route = context.Routes.Single(x => x.RouteId == id);
+               
+                return View(route);
+            }
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Route route)
+        {
+            Route r = context.Routes.Single(c => c.RouteId == route.RouteId);
+           
+                context.Routes.Remove(r);
+                context.SaveChanges();
+                TempData["alertMessageDelete"] = "deleted route!";
+
+            return RedirectToAction("Details","Route");
+            
         }
     }
 }

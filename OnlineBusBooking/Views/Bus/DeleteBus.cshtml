@@ -5,85 +5,90 @@
 }
 
 <h2>DeleteBus</h2>
+@using (Html.BeginForm("DeleteBus", "Bus", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
+<div class="form-horizontal">
     <h4>BusMaster</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.BusNo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BusNo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BustType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BustType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalSeat)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalSeat)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SeatColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SeatColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SeatRow)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SeatRow)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BookedSeat)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BookedSeat)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AvailableSeats)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AvailableSeats)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BusName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BusName)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.BusId)
+    <div class="form-group">
+        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <img src="@Url.Content(Model.Image?? "defaultImg.jpg")" class="img-rounded" width="100" height="100" />
         </div>
-    }
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BusNo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.BusNo, new { htmlAttributes = new { @class = "form-control" } })
+           
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BustType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.BustType, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.BustType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TotalSeat, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.TotalSeat, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TotalSeat, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SeatColumn, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.SeatColumn, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SeatColumn, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SeatRow, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.SeatRow, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SeatRow, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookedSeat, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.BookedSeat, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.BookedSeat, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AvailableSeats, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.AvailableSeats, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AvailableSeats, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BusName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.BusName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.BusName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
 </div>
+}
